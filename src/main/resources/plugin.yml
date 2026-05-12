@@ -1,0 +1,9 @@
+name: NekoyaLevelBorder
+description: $description
+version: '${version}'
+
+main: at.darkichen.nekoyaLevelBorder.NekoyaLevelBorder
+api-version: '26.1.2'
+load: POSTWORLD
+
+authors: [ Darkichen ]
