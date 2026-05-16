@@ -1,0 +1,39 @@
+#General
+isActive = true
+prefix = '§aLevel§7Border §8 » §7'
+
+#Sync level settings
+
+#Keep level and exp on death
+keepLevelOnDeath = true
+
+#Border settings
+
+#Radius extension per level
+expandOnLvlUp = 2
+
+#Default border radius (min on start with level 0)
+defaultRadius = 2
+
+#Multiplikator for radius extension
+#The first numbers (1-10) must be unique! You can delete stages or add more.
+#In the array: (these numbers can be changed, but keep in mind, that each stage should have higher or equal numbers than the previous stage)
+#the first number (default 50, 100, 150 ...) indicates the level when the stage should be active.
+#the second number (default 1, 1, 2, 2 ...) indicates the multiplicator for the value "expandOnLvlUp".
+stage = [
+    [50, 1],
+    [100, 1],
+    [150, 2],
+    [200, 2],
+    [250, 3],
+    [300, 3],
+    [350, 4],
+    [400, 4],
+    [500, 5]
+]
+
+#Sync level saves (do not edit)
+syncLevel = 0
+syncExp = 0.0
+
+#Border location saves (do not edit)

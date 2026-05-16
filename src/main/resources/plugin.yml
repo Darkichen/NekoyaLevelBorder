@@ -2,8 +2,12 @@ name: NekoyaLevelBorder
 description: $description
 version: '${version}'
 
-main: at.darkichen.nekoyaLevelBorder.NekoyaLevelBorder
+main: at.darkichen.levelBorder.LevelBorder
 api-version: '26.1.2'
 load: POSTWORLD
 
 authors: [ Darkichen ]
+
+commands:
+  levelborder:
+    description: LevelBorder main command
