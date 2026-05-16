@@ -30,7 +30,7 @@ public class LevelBorderHandler {
      * @param player (Player) Command sender
      */
     public static void handleDisable(Player player, LevelBorder levelBorder) {
-        if (!config.isActive()) {
+        if (config.isActive()) {
             config.setActive(false);
             Configs.saveConfigs(LevelBorder.getInstance());
             levelBorder.getBorderApi().disableBorders();
