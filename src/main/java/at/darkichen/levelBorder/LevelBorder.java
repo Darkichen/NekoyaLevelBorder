@@ -58,5 +58,6 @@ public final class LevelBorder extends JavaPlugin {
         pm.registerEvents(new LevelUpListener(instance), instance);
         pm.registerEvents(new PlayerDeathListener(instance), instance);
         pm.registerEvents(new QuitListener(), instance);
+        pm.registerEvents(new PlayerRespawnListener(instance), instance);
     }
 }

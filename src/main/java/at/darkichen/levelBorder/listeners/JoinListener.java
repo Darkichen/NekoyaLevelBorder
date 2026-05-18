@@ -3,6 +3,7 @@ package at.darkichen.levelBorder.listeners;
 import at.darkichen.levelBorder.LevelBorder;
 import at.darkichen.levelBorder.config.Config;
 import at.darkichen.levelBorder.config.Configs;
+import at.darkichen.levelBorder.utils.BorderApi;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.World;
@@ -25,11 +26,9 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (config.isActive()) {
-            World world = player.getWorld();
-            if (!world.getWorldBorder().isInside(player.getLocation())) {
-                player.teleport(config.getBorder().get(world.getName()));
-            }
             levelBorder.getLevelApi().setPlayerLevel(player);
+            levelBorder.getBorderApi().sendVisualBorder(player);
+            levelBorder.getBorderApi().teleportPlayer(player);
         }
         event.joinMessage(Component.text(" » ").color(NamedTextColor.GRAY).append(Component.text(player.getName()).color(NamedTextColor.GREEN)));
     }

@@ -50,7 +50,7 @@ public class Configs {
         config.setExpandOnLvlUp(Math.toIntExact(toml.getLong("expandOnLvlUp", 2L)));
         config.setDefaultRadius(Math.toIntExact(toml.getLong("defaultRadius", 2L)));
         config.setSyncLevel(Math.toIntExact(toml.getLong("syncLevel", 0L)));
-        config.setSyncExp(toml.getDouble("syncExp", 0.0).floatValue());
+        config.setSyncAmount(Math.toIntExact(toml.getLong("syncAmount", 0L)));
 
         List<List<Integer>> stageList = new ArrayList<>();
         List<Object> rawStage = toml.getList("stage");
@@ -119,7 +119,7 @@ public class Configs {
             rawData.put("defaultRadius", config.getDefaultRadius());
             rawData.put("stage", config.getStage());
             rawData.put("syncLevel", config.getSyncLevel());
-            rawData.put("syncExp", config.getSyncExp());
+            rawData.put("syncAmount", config.getSyncAmount());
 
             Map<String, Object> borderTable = new HashMap<>();
 
