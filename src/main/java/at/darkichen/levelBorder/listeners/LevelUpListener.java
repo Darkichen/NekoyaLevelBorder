@@ -3,7 +3,9 @@ package at.darkichen.levelBorder.listeners;
 import at.darkichen.levelBorder.LevelBorder;
 import at.darkichen.levelBorder.config.Configs;
 import at.darkichen.levelBorder.utils.LevelApi;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +39,7 @@ public class LevelUpListener implements Listener {
                     levelApi.setSyncAmount(levelApi.getSyncAmount() - cost);
                 }
                 levelApi.setSyncLevel(newLevel);
-                levelBorder.getBorderApi().updateBorders();
+                levelApi.updateLevel();
             }
         }
     }

@@ -3,6 +3,7 @@ package at.darkichen.levelBorder.utils;
 import at.darkichen.levelBorder.LevelBorder;
 import at.darkichen.levelBorder.config.Config;
 import at.darkichen.levelBorder.config.Configs;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
