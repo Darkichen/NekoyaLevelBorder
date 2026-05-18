@@ -24,14 +24,20 @@ public class LevelUpListener implements Listener {
     @EventHandler
     public void onPlayerLevelChange(PlayerLevelChangeEvent event) {
         if (Configs.getConfig().isActive()) {
-            if (event.getNewLevel() != levelApi.getSyncLevel()) {
-                if (event.getNewLevel() > event.getOldLevel()) {
+            final int newLevel = event.getPlayer().getLevel();
+            if (newLevel != levelApi.getSyncLevel()) {
+                if (newLevel > levelApi.getSyncLevel()) {
                     sendSoundEffect(true);
-                } else if (event.getNewLevel() < event.getOldLevel()) {
+                } else if (newLevel < levelApi.getSyncLevel()) {
                     sendSoundEffect(false);
+                    int cost = 0;
+                    for (int level = newLevel; level < levelApi.getSyncLevel(); level++) {
+                        cost += levelApi.getXpNeededForNextLevel(level);
+                    }
+                    levelApi.setSyncAmount(levelApi.getSyncAmount() - cost);
                 }
-                levelApi.setSyncLevel(event.getNewLevel());
-                levelApi.updateLevel();
+                levelApi.setSyncLevel(newLevel);
+                levelBorder.getBorderApi().updateBorders();
             }
         }
     }
@@ -39,13 +45,9 @@ public class LevelUpListener implements Listener {
     @EventHandler
     public void onPlayerExpChange(PlayerExpChangeEvent event) {
         if (Configs.getConfig().isActive()) {
-            if (event.getAmount() != levelApi.getSyncExp()) {
-                levelApi.setSyncExp(event.getAmount());
-                levelApi.updateExp();
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-                }
-            }
+            levelApi.setSyncAmount(levelApi.getSyncAmount() + event.getAmount());
+            levelApi.updateAmount();
+            event.setAmount(0);
         }
     }
 
