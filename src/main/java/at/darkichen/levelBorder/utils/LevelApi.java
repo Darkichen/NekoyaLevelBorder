@@ -4,6 +4,7 @@ import at.darkichen.levelBorder.LevelBorder;
 import at.darkichen.levelBorder.config.Config;
 import at.darkichen.levelBorder.config.Configs;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class LevelApi {
@@ -20,21 +21,23 @@ public class LevelApi {
         return config.getSyncLevel();
     }
 
-    public float getSyncExp() {
-        return config.getSyncExp();
+    public int getSyncAmount() {
+        return config.getSyncAmount();
     }
 
     public void setSyncLevel(int level) {
         config.setSyncLevel(level);
+        Configs.saveConfigs(levelBorder);
     }
 
-    public void setSyncExp(float exp) {
-        config.setSyncExp(exp);
+    public void setSyncAmount(int exp) {
+        config.setSyncAmount(exp);
+        Configs.saveConfigs(levelBorder);
     }
 
     public void setPlayerLevel(Player player) {
         player.setLevel(getSyncLevel());
-        player.setExp(getSyncExp());
+        player.setExperienceLevelAndProgress(getSyncAmount());
     }
 
     public void updateLevel() {
@@ -44,17 +47,24 @@ public class LevelApi {
         levelBorder.getBorderApi().updateBorders();
     }
 
-    public void updateExp() {
+    public void updateAmount() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.setExp(getSyncExp());
+            player.setExperienceLevelAndProgress(getSyncAmount());
         }
     }
 
     public void reset() {
         config.setSyncLevel(0);
-        config.setSyncExp(0f);
+        config.setSyncAmount(0);
+        Configs.saveConfigs(levelBorder);
         updateLevel();
-        updateExp();
+        updateAmount();
+    }
+
+    public int getXpNeededForNextLevel(int level) {
+        if (level < 16) return 2 * level + 7;
+        else if (level < 31) return 5 * level - 38;
+        else return 9 * level - 158;
     }
 
 }

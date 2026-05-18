@@ -24,7 +24,7 @@ public class Config {
     @Getter @Setter
     private int syncLevel;
     @Getter @Setter
-    private float syncExp;
+    private int syncAmount;
     @Getter @Setter
     private Map<String, Location> border;
 
@@ -38,7 +38,7 @@ public class Config {
                 ", defaultRadius=" + defaultRadius +
                 ", stage=" + stage +
                 ", syncLevel=" + syncLevel +
-                ", syncExp=" + syncExp +
+                ", syncExp=" + syncAmount +
                 ", border=" + border +
                 "}";
     }

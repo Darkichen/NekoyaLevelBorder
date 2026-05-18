@@ -34,6 +34,6 @@ stage = [
 
 #Sync level saves (do not edit)
 syncLevel = 0
-syncExp = 0.0
+syncAmount = 0
 
 #Border location saves (do not edit)
