@@ -88,7 +88,10 @@ public class PortalRedirectListener implements Listener {
 
     @EventHandler
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
-        levelBorder.getBorderApi().sendVisualBorder(event.getPlayer());
+        if (Configs.getConfig().isActive()) {
+            levelBorder.getBorderApi().sendVisualBorder(event.getPlayer());
+
+        }
     }
 
     private void setDestination(PlayerPortalEvent event, Location location) {
