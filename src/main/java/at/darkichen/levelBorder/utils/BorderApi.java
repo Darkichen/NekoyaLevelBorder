@@ -88,12 +88,12 @@ public class BorderApi {
 
     public void teleportPlayer(Player player) {
         if (!levelBorder.getBorderApi().checkIfInsideBorder(player)) {
-            player.teleport(getBorderCenter(player));
+            player.teleport(getBorderCenter(player.getWorld()));
         }
     }
 
-    public Location getBorderCenter(Player player) {
-        Location loc = config.getBorder().get(player.getWorld().getName());
+    public Location getBorderCenter(World world) {
+        Location loc = config.getBorder().get(world.getName());
         int highestY = loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ());
         loc.setY(highestY + 2);
         return loc;

@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import java.util.Objects;
+
 public class PlayerRespawnListener implements Listener {
 
     private final LevelBorder levelBorder;
@@ -22,7 +24,7 @@ public class PlayerRespawnListener implements Listener {
     public void onRespawn(PlayerRespawnEvent event) {
         if (config.isActive()) {
             levelBorder.getBorderApi().sendVisualBorder(event.getPlayer());
-            event.setRespawnLocation(levelBorder.getBorderApi().getBorderCenter(event.getPlayer()));
+            event.setRespawnLocation(levelBorder.getBorderApi().getBorderCenter(Objects.requireNonNull(Bukkit.getWorld("world"))));
         }
     }
 

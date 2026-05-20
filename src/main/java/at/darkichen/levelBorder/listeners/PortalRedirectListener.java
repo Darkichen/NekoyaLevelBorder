@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -83,6 +84,11 @@ public class PortalRedirectListener implements Listener {
         else {
             setDestination(event, borderMap.get("world"));
         }
+    }
+
+    @EventHandler
+    public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
+        levelBorder.getBorderApi().sendVisualBorder(event.getPlayer());
     }
 
     private void setDestination(PlayerPortalEvent event, Location location) {
