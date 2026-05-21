@@ -65,8 +65,8 @@ public class BorderApi {
                 packet.getDoubles().write(0, config.getBorder().get(world.getName()).getX()); //center X
                 packet.getDoubles().write(1, config.getBorder().get(world.getName()).getZ()); //center Z
 
-                packet.getDoubles().write(2, (double) (config.getDefaultRadius() + (level > 0 ? (level * (config.getExpandOnLvlUp() * getStageMult(level))) : 0))); //old diameter
-                packet.getDoubles().write(3, (double) (config.getDefaultRadius() + (level > 0 ? (level * (config.getExpandOnLvlUp() * getStageMult(level))) : 0))); //new diameter
+                packet.getDoubles().write(2, (double) (config.getDefaultRadius() + (level > 0 ? getExpandWithMult(level) : 0))); //old diameter
+                packet.getDoubles().write(3, (double) (config.getDefaultRadius() + (level > 0 ? getExpandWithMult(level) : 0))); //new diameter
                 packet.getLongs().write(0, 0L);
                 packet.getIntegers().write(0, 29999984);
 
@@ -103,7 +103,7 @@ public class BorderApi {
         Location loc = player.getLocation();
         int level = config.getSyncLevel();
 
-        double radius = (double) (config.getDefaultRadius() + (level > 0 ? (level * (config.getExpandOnLvlUp() * getStageMult(level))) : 0)) / 2;
+        double radius = (double) (config.getDefaultRadius() + (level > 0 ? getExpandWithMult(level) : 0)) / 2;
         double centerX = config.getBorder().get(player.getWorld().getName()).getX();
         double centerZ = config.getBorder().get(player.getWorld().getName()).getZ();
 
@@ -115,18 +115,34 @@ public class BorderApi {
         return (loc.getX() >= minX && loc.getX() <= maxX) && (loc.getZ() >= minZ && loc.getZ() <= maxZ);
     }
 
-    public int getStageMult(int level) {
-        int mult = 1;
+    public int getExpandWithMult(int level) {
+        List<List<Integer>> stages = config.getStage();
+        int totalExpand = 0;
+        int prevThreshold = 1;
+        int currentMult = 1;
 
-        for (List<Integer> stage : config.getStage()) {
-            if (stage.get(0) <= level) {
-                mult = stage.get(1);
-            } else {
-                break;
+        for (List<Integer> stage : stages) {
+            int threshold = stage.get(0);
+            int stageMult = stage.get(1);
+
+            if (level < threshold) {
+                totalExpand += (level - prevThreshold + 1) * config.getExpandOnLvlUp() * currentMult;
+                return totalExpand;
             }
+
+            int levelsInRange = threshold - prevThreshold;
+            totalExpand += levelsInRange * config.getExpandOnLvlUp() * currentMult;
+            totalExpand += config.getExpandOnLvlUp() * stageMult;
+
+            prevThreshold = threshold + 1;
+            currentMult = stageMult;
         }
 
-        return mult;
+        if (level >= prevThreshold) {
+            totalExpand += (level - prevThreshold + 1) * config.getExpandOnLvlUp() * currentMult;
+        }
+
+        return totalExpand;
     }
 
     public void disableBorders() {
